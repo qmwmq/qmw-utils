@@ -1,10 +1,10 @@
-package com.github.qmwmq.typehandler;
+package io.github.qmwmq.typehandler;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.core.metadata.TableFieldInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.fasterxml.jackson.databind.JavaType;
-import com.github.qmwmq.utils.JacksonUtils;
+import io.github.qmwmq.utils.JacksonUtils;
 import lombok.SneakyThrows;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
@@ -15,9 +15,16 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
+@Deprecated // 使用JacksonTypeHandler即可
 public class GenericTypeHandler extends BaseTypeHandler<Object> {
 
     private static final Map<String, Map<String, JavaType>> genericTypeMap = new ConcurrentHashMap<>();
+
+    /**
+     * 默认构造器
+     */
+    public GenericTypeHandler() {
+    }
 
     @Override
     @SneakyThrows

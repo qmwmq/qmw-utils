@@ -1,4 +1,4 @@
-package com.github.qmwmq.entity;
+package io.github.qmwmq.entity;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

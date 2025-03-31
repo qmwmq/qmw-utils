@@ -1,4 +1,4 @@
-package com.github.qmwmq.utils;
+package io.github.qmwmq.utils;
 
 public class OsUtils {
 
