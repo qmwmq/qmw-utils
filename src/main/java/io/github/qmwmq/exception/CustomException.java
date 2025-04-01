@@ -3,6 +3,9 @@ package io.github.qmwmq.exception;
 import io.github.qmwmq.entity.ResponseDto;
 import lombok.Getter;
 
+/**
+ * 自定义异常
+ */
 @Getter
 public class CustomException extends RuntimeException {
 

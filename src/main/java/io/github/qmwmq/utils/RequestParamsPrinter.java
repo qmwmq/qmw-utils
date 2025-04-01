@@ -14,9 +14,13 @@ public class RequestParamsPrinter {
         if ("OPTIONS".equalsIgnoreCase(request.getMethod()))
             return;
 
-        StringBuilder builder = new StringBuilder(); // 拼接成字符串一次性打印出，防止多个请求的同时打印造成混杂
-        builder.append("[").append(request.getMethod().toUpperCase()).append("]");
-        builder.append(request.getRequestURI()).append(separator);
+        String method = request.getMethod().toUpperCase();
+        String uri = request.getRequestURI();
+
+        // 拼接成字符串一次性打印出，防止多个请求的同时打印造成混杂
+        StringBuilder builder = new StringBuilder();
+        builder.append("[").append(method).append("]");
+        builder.append(uri).append(separator);
         builder.append("params:").append(separator);
         request.getParameterMap().forEach((k, v) -> {
             String value = v.length == 1 ? v[0] : (Arrays.toString(v) + "(size=" + v.length + ")");
@@ -31,7 +35,7 @@ public class RequestParamsPrinter {
             String value = values.size() == 1 ? values.getFirst() : (values + "(size=" + values.size() + ")");
             builder.append("\t").append(name).append(": ").append(value).append(separator);
         }
-        System.out.println(builder.toString());
+        System.out.println(builder);
     }
 
 }
