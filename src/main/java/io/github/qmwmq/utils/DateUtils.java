@@ -1,7 +1,14 @@
 package io.github.qmwmq.utils;
 
+/**
+ * 日期工具类
+ */
 public class DateUtils {
 
+    /**
+     * 屏蔽默认构造器
+     */
+    private DateUtils() {}
 
     private static final String[] patterns = {
             "yyyy-M-d HH:mm",

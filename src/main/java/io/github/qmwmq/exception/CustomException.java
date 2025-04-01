@@ -9,6 +9,9 @@ import lombok.Getter;
 @Getter
 public class CustomException extends RuntimeException {
 
+    /**
+     * 默认CUSTOM_ERROR
+     */
     private ResponseDto.Code code = ResponseDto.ConstantCode.CUSTOM_ERROR;
 
     /**

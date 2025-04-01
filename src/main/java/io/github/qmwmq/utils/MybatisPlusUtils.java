@@ -5,8 +5,23 @@ import com.baomidou.mybatisplus.core.toolkit.sql.StringEscape;
 
 import java.util.Map;
 
+/**
+ * MybatisPlus相关工具
+ */
 public class MybatisPlusUtils {
 
+    /**
+     * 屏蔽默认构造器
+     */
+    private MybatisPlusUtils() {
+    }
+
+    /**
+     * 将wrapper转换为sql
+     *
+     * @param wrapper wrapper
+     * @return sql
+     */
     public static String getCustomSqlSegment(LambdaQueryWrapper<?> wrapper) {
         String sql = wrapper.getCustomSqlSegment();
 

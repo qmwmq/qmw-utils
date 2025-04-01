@@ -1,7 +1,13 @@
 package io.github.qmwmq.utils;
 
+/**
+ * 操作系统判断
+ */
 public class OsUtils {
 
+    /**
+     * 屏蔽默认构造器
+     */
     private OsUtils() {
     }
 

@@ -7,8 +7,21 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
+/**
+ * 参数打印工具
+ */
 public class RequestParamsPrinter {
 
+    /**
+     * 屏蔽默认构造器
+     */
+    private RequestParamsPrinter() {
+    }
+
+    /**
+     * 打印参数
+     * @param request request对象
+     */
     public static void print(HttpServletRequest request) {
         String separator = System.lineSeparator();
         if ("OPTIONS".equalsIgnoreCase(request.getMethod()))

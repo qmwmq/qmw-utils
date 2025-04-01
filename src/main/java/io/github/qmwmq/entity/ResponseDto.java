@@ -3,6 +3,11 @@ package io.github.qmwmq.entity;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+/**
+ * 数据返回结果
+ *
+ * @param <T> 泛型
+ */
 @Data
 @Accessors(chain = true)
 public class ResponseDto<T> {
@@ -92,14 +97,35 @@ public class ResponseDto<T> {
         return error(null, msg, null);
     }
 
+    /**
+     * 状态码接口，要扩展状态码需要enum该接口
+     */
     public interface Code {
     }
 
+    /**
+     * 常用状态码
+     */
     public enum ConstantCode implements Code {
+        /**
+         * 成功
+         */
         OK,
+        /**
+         * 自定义错误
+         */
         CUSTOM_ERROR,
+        /**
+         * 系统错误
+         */
         SYSTEM_ERROR,
+        /**
+         * 需要登录
+         */
         LOGIN_REQUIRED,
+        /**
+         * 登录过期
+         */
         LOGIN_EXPIRED,
     }
 

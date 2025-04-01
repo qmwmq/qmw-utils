@@ -29,6 +29,9 @@ public class JacksonUtils {
 
     // https://blog.csdn.net/xueyijin/article/details/128892398
 
+    /**
+     * 屏蔽默认构造器
+     */
     private JacksonUtils() {
     }
 
@@ -113,7 +116,9 @@ public class JacksonUtils {
      *
      * @param o       入参
      * @param mapType map的类型
-     * @return 出参
+     * @param <K>     key
+     * @param <V>     value
+     * @return map
      */
     @SneakyThrows
     public static <K, V> Map<K, V> toMap(Object o, MapType mapType) {
@@ -148,7 +153,10 @@ public class JacksonUtils {
     /**
      * 解析为list
      *
-     * @param o 入参
+     * @param o       入参
+     * @param mapType map类
+     * @param <K>     map的key类型
+     * @param <V>     map的value类型
      * @return 出参
      */
     @SneakyThrows

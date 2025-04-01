@@ -4,6 +4,9 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.stream.Stream;
 
+/**
+ * ip获取工具
+ */
 public class IpUtils {
 
     private IpUtils() {
