@@ -14,7 +14,7 @@ public class StringUtils {
     }
 
     /**
-     * 无法trim的特殊空格符
+     * 无法strip的特殊空格符
      */
     public static final String[] specialSpaces = {
             "\u00A0", "\u2000", "\u2001", "\u2002", "\u2003",
@@ -31,7 +31,7 @@ public class StringUtils {
      * @return 是否空字符串
      */
     public static boolean isBlank(Object str) {
-        return Optional.ofNullable(str).orElse("").toString().trim().isBlank();
+        return Optional.ofNullable(str).orElse("").toString().strip().isBlank();
     }
 
     /**
@@ -51,9 +51,9 @@ public class StringUtils {
      * @param string 入参
      * @return 出参
      */
-    public static String trimAll(Object string) {
+    public static String stripAll(Object string) {
         return Arrays.stream(ifBlank(string, "").split(""))
-                .map(String::trim)
+                .map(String::strip)
                 .filter(e -> Arrays.stream(specialSpaces).noneMatch(o -> o.equals(e)))
                 .collect(Collectors.joining());
     }
@@ -65,6 +65,14 @@ public class StringUtils {
      */
     public static String uuid() {
         return UUID.randomUUID().toString().replace("-", "");
+    }
+
+    public static void main(String[] args) {
+        var a = """
+                123%s
+                    321+"123"
+                """.formatted(123);
+        System.out.println(a);
     }
 
 }
