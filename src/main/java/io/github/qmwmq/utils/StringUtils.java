@@ -17,11 +17,8 @@ public class StringUtils {
      * 无法strip的特殊空格符
      */
     public static final String[] specialSpaces = {
-            "\u00A0", "\u2000", "\u2001", "\u2002", "\u2003",
-            "\u2004", "\u2005", "\u2006", "\u2007", "\u2008",
-            "\u2009", "\u200A", "\u200B", "\u200C", "\u200D",
-            "\u202C", "\u202D", "\u202F", "\u205F", "\u2060",
-            "\u3000", "\uFEFF"
+            "\u00A0", "\u2007", "\u200B", "\u200C", "\u200D",
+            "\u202C", "\u202D", "\u202F", "\u2060", "\uFEFF"
     };
 
     /**
@@ -65,14 +62,6 @@ public class StringUtils {
      */
     public static String uuid() {
         return UUID.randomUUID().toString().replace("-", "");
-    }
-
-    public static void main(String[] args) {
-        var a = """
-                123%s
-                    321+"123"
-                """.formatted(123);
-        System.out.println(a);
     }
 
 }
