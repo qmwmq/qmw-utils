@@ -10,4 +10,5 @@ public class ExcelParser {
      */
     private ExcelParser() {
     }
+
 }
