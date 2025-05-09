@@ -19,7 +19,7 @@ public class CustomP6SpyLogger implements MessageFormattingStrategy {
     ) {
         if (effectiveSql.isEmpty())
             return "";
-        String time = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now());
+        String time = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS").format(LocalDateTime.now());
         return System.lineSeparator() +
                 "[" + time + " execution: " + elapsed + "ms] ==> " +
                 effectiveSql.replaceAll(" +", " ");
