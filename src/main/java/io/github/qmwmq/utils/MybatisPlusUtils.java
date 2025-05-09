@@ -31,8 +31,8 @@ public class MybatisPlusUtils {
             Object value = entry.getValue();
             if (value == null)
                 sql = sql.replace("#{ew.paramNameValuePairs." + entry.getKey() + "}", "null");
-            else if (value instanceof String)
-                sql = sql.replace("#{ew.paramNameValuePairs." + entry.getKey() + "}", StringEscape.escapeString(value.toString()));
+            else if (value instanceof String v)
+                sql = sql.replace("#{ew.paramNameValuePairs." + entry.getKey() + "}", StringEscape.escapeString(v));
             else
                 sql = sql.replace("#{ew.paramNameValuePairs." + entry.getKey() + "}", value.toString());
         }
