@@ -1,6 +1,5 @@
 package io.github.qmwmq.exception;
 
-import io.github.qmwmq.entity.ResponseDto;
 import lombok.Getter;
 
 /**
@@ -12,7 +11,7 @@ public class CustomException extends RuntimeException {
     /**
      * 默认CUSTOM_ERROR
      */
-    private int code = ResponseDto.ConstantStatus.SYSTEM_ERROR.code();
+    private int code = 0;
 
     /**
      * 抛出异常

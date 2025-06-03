@@ -20,11 +20,12 @@ public class PageVo<T> {
     private Collection<T> records;
     private Map<String, Object> extra;
 
-    // 私有构造器，防止外部直接 new
+    /**
+     * 私有构造器
+     */
     private PageVo() {
     }
 
-    // 内部静态 Builder 类
     public static class Builder<T> {
 
         private final PageVo<T> instance = new PageVo<>();

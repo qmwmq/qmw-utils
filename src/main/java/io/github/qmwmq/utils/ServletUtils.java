@@ -1,21 +1,30 @@
 package io.github.qmwmq.utils;
 
-import com.alibaba.excel.EasyExcel;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
 
 /**
  * Servlet相关工具类
  */
 public class ServletUtils {
 
+    /**
+     * 默认构造器
+     */
     private ServletUtils() {
     }
 
+    /**
+     * 获取参数
+     *
+     * @param request HttpServletRequest
+     * @return 参数
+     */
     public static String getParamsString(HttpServletRequest request) {
         String separator = System.lineSeparator();
         if ("OPTIONS".equalsIgnoreCase(request.getMethod()))
