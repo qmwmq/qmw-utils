@@ -8,45 +8,52 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 分页数据封装实体类
+ * 分页数据封装实体类（泛型版）
+ *
+ * @param <T> 数据类型
  */
 @Data
 @Accessors(chain = true)
-public class PageVo {
+public class PageVo<T> {
 
     private long total;
-    private Collection<?> records;
+    private Collection<T> records;
     private Map<String, Object> extra;
 
-    /**
-     * 默认构造器
-     */
-    public PageVo() {
+    // 私有构造器，防止外部直接 new
+    private PageVo() {
     }
 
-    /**
-     * 两个参数的构造器
-     *
-     * @param total   total
-     * @param records records
-     */
-    public PageVo(long total, Collection<?> records) {
-        this.total = total;
-        this.records = records;
+    // 内部静态 Builder 类
+    public static class Builder<T> {
+
+        private final PageVo<T> instance = new PageVo<>();
+
+        public Builder<T> total(long total) {
+            instance.setTotal(total);
+            return this;
+        }
+
+        public Builder<T> records(Collection<T> records) {
+            instance.setRecords(records);
+            return this;
+        }
+
+        public Builder<T> putExtra(String key, Object value) {
+            if (instance.extra == null)
+                instance.extra = new HashMap<>();
+            instance.extra.put(key, value);
+            return this;
+        }
+
+        public PageVo<T> build() {
+            return instance;
+        }
     }
 
-    /**
-     * 添加额外信息
-     *
-     * @param key   key
-     * @param value value
-     * @return PageVo
-     */
-    public PageVo putExtra(String key, Object value) {
-        if (extra == null)
-            extra = new HashMap<>();
-        extra.put(key, value);
-        return this;
+    // 提供静态方法快速获取 Builder
+    public static <T> Builder<T> builder() {
+        return new Builder<>();
     }
 
 }
