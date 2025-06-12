@@ -3,6 +3,7 @@ package io.github.qmwmq.entity;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +20,18 @@ public class PageVo<T> {
     private long total;
     private Collection<T> records;
     private Map<String, Object> extra;
+
+    public Collection<T> getRecords() {
+        if (records == null)
+            return new ArrayList<>();
+        return records;
+    }
+
+    public Map<String, Object> getExtra() {
+        if (extra == null)
+            return new HashMap<>();
+        return extra;
+    }
 
     /**
      * 私有构造器
