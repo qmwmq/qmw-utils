@@ -29,14 +29,18 @@ public class MybatisPlusUtils {
 
         for (Map.Entry<String, Object> entry : paramNameValuePairs.entrySet()) {
             Object value = entry.getValue();
-            if (value == null)
-                sql = sql.replace("#{ew.paramNameValuePairs." + entry.getKey() + "}", "null");
-            else if (value instanceof String v)
-                sql = sql.replace("#{ew.paramNameValuePairs." + entry.getKey() + "}", StringEscape.escapeString(v));
-            else
-                sql = sql.replace("#{ew.paramNameValuePairs." + entry.getKey() + "}", value.toString());
+            sql = switch (value) {
+                case null -> replaceValue(sql, entry.getKey(), "null");
+                case String v -> replaceValue(sql, entry.getKey(), StringEscape.escapeString(v));
+                case Enum<?> v -> replaceValue(sql, entry.getKey(), StringEscape.escapeString(v.name()));
+                default -> replaceValue(sql, entry.getKey(), StringEscape.escapeString(value.toString()));
+            };
         }
         return sql;
+    }
+
+    private static String replaceValue(String sql, String key, String value) {
+        return sql.replace("#{ew.paramNameValuePairs." + key + "}", value);
     }
 
 }
