@@ -7,9 +7,9 @@ import java.util.stream.Stream;
 /**
  * ip获取工具
  */
-public class IpUtils {
+public class IPUtils {
 
-    private IpUtils() {
+    private IPUtils() {
     }
 
     /**
