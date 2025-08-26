@@ -62,8 +62,8 @@ public class ServletUtils {
      * @param value    值
      */
     public static void setHeader(HttpServletResponse response, String header, String value) {
-        response.setHeader("Access-Control-Expose-Headers", header);
         response.setHeader(header, value);
+        response.addHeader("Access-Control-Expose-Headers", header);
     }
 
     //    public void download(HttpServletResponse response) throws Exception {
