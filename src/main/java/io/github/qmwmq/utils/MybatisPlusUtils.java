@@ -24,11 +24,10 @@ public class MybatisPlusUtils {
      * @param wrapper wrapper
      * @return sql
      */
-    public static String getCustomSqlSegment(LambdaQueryWrapper<?> wrapper) {
+    public static String getSql(LambdaQueryWrapper<?> wrapper) {
         String columns = wrapper.getSqlSelect();
         if (StringUtils.isBlank(columns))
             columns = "*";
-
         String sql = wrapper.getCustomSqlSegment();
 
         TableInfo tableInfo = TableInfoHelper.getTableInfo(wrapper.getEntityClass());
@@ -41,10 +40,10 @@ public class MybatisPlusUtils {
                 case null -> replaceValue(sql, entry.getKey(), "null");
                 case String v -> replaceValue(sql, entry.getKey(), StringEscape.escapeString(v));
                 case Enum<?> v -> replaceValue(sql, entry.getKey(), StringEscape.escapeString(v.name()));
-                default -> replaceValue(sql, entry.getKey(), StringEscape.escapeString(value.toString()));
+                default -> replaceValue(sql, entry.getKey(), value.toString());
             };
         }
-        return String.join(" ", "select", columns, "from", tableName, sql);
+        return "select " + columns + " from " + tableName + " " + sql;
     }
 
     private static String replaceValue(String sql, String key, String value) {
