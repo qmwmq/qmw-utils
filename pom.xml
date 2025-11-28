@@ -6,7 +6,7 @@
 
     <groupId>io.github.qmwmq</groupId>
     <artifactId>qmw-utils</artifactId>
-    <version>1.0.12</version>
+    <version>1.0.13</version>
     <name>qmw-utils</name>
     <description>utils for java21</description>
     <url>https://github.com/qmwmq/qmw-utils</url>
