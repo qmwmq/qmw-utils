@@ -8,7 +8,7 @@
     <artifactId>qmw-utils</artifactId>
     <version>1.0.13</version>
     <name>qmw-utils</name>
-    <description>utils for java21</description>
+    <description>utils for java25</description>
     <url>https://github.com/qmwmq/qmw-utils</url>
 
     <licenses>
@@ -37,8 +37,8 @@
     </scm>
 
     <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.source>25</maven.compiler.source>
+        <maven.compiler.target>25</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -53,10 +53,17 @@
             <version>6.1.0</version>
             <scope>provided</scope><!-- request对象无法自己生成，所以无法本地调试运行，且由容器提供，所以这里使用provided -->
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--            <artifactId>jackson-databind</artifactId>-->
+<!--            <version>2.20.0</version>-->
+<!--            <optional>true</optional>-->
+<!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/tools.jackson.core/jackson-databind -->
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
+            <groupId>tools.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.20.0</version>
+            <version>3.0.3</version>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -68,7 +75,7 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus</artifactId>
-            <version>3.5.11</version>
+            <version>3.5.15</version>
             <optional>true</optional>
         </dependency>
         <dependency>
