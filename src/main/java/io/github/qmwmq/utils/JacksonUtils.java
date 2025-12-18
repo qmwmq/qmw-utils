@@ -37,13 +37,13 @@ public class JacksonUtils {
 
     // 基础ObjectMapper
     @Getter
-    private static final ObjectMapper objectMapper = JsonMapper.builder()
+    private static final JsonMapper jsonMapper = JsonMapper.builder()
             .configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS, true) // 允许\r\n等
             .configure(JsonReadFeature.ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER, true) // 允许带反斜杠\
             .configure(JsonReadFeature.ALLOW_LEADING_ZEROS_FOR_NUMBERS, true) // 允许数字以0开头
             .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false) // 序列化无成员变量的对象会报错，这样配置直接序列化成{}
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false) // 反序列化时忽略不存在的属性
-            .serializationInclusion(JsonInclude.Include.NON_NULL) // 忽略null值的key
+            .changeDefaultPropertyInclusion() // 忽略null值的key
             .build()
             .registerModule(
                     new SimpleModule()
@@ -82,7 +82,7 @@ public class JacksonUtils {
             );
 
     @Getter
-    private static final TypeFactory typeFactory = objectMapper.getTypeFactory();
+    private static final TypeFactory typeFactory = jsonMapper.getTypeFactory();
 
     /**
      * 转换为string
