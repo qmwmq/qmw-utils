@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.core.toolkit.sql.StringEscape;
 import java.util.Map;
 
 /**
- * MybatisPlus相关工具
+ * MybatisPlus 相关工具
  */
 public class MybatisPlusUtils {
 
@@ -19,7 +19,7 @@ public class MybatisPlusUtils {
     }
 
     /**
-     * 将wrapper转换为sql
+     * 将 wrapper 转换为 sql
      *
      * @param wrapper wrapper
      * @return sql
