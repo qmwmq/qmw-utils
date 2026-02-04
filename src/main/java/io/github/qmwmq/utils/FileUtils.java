@@ -1,8 +1,11 @@
 package io.github.qmwmq.utils;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Objects;
 
 /**
@@ -26,6 +29,10 @@ public class FileUtils {
 
     public static String getFileType(MultipartFile file) {
         return getFileType(Objects.requireNonNull(file, "文件不能为空").getOriginalFilename());
+    }
+
+    public String sha256Hex(InputStream stream) throws IOException {
+        return DigestUtils.sha256Hex(stream);
     }
 
 }
