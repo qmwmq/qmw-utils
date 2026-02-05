@@ -31,7 +31,7 @@ public class FileUtils {
         return getFileType(Objects.requireNonNull(file, "文件不能为空").getOriginalFilename());
     }
 
-    public String sha256Hex(InputStream stream) throws IOException {
+    public static String sha256Hex(InputStream stream) throws IOException {
         return DigestUtils.sha256Hex(stream);
     }
 
