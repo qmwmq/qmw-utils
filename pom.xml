@@ -6,7 +6,7 @@
 
     <groupId>io.github.qmwmq</groupId>
     <artifactId>qmw-utils</artifactId>
-    <version>1.0.17</version>
+    <version>1.0.18</version>
     <name>qmw-utils</name>
     <description>utils for java25</description>
     <url>https://github.com/qmwmq/qmw-utils</url>
@@ -88,6 +88,12 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.42</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>3.18.5</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
