@@ -85,8 +85,7 @@ public class AliyunOSSClient implements AutoCloseable {
     }
 
     /**
-     * 实现AutoCloseable接口，在销毁时关闭OSSClient
-     * 可通过try-with-resources自动调用，或在应用关闭时手动调用
+     * 实现AutoCloseable接口，在销毁时自动关闭OSSClient
      */
     @Override
     public void close() {
