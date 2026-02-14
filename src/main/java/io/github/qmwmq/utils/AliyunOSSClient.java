@@ -64,7 +64,7 @@ public class AliyunOSSClient implements AutoCloseable {
                 .setPolicy(encodedPolicy)
                 .setSignature(signature)
                 .setKey(ossKey)
-                .setUrl("https://" + options.bucket + "." + options.endpoint + "/" + ossKey);
+                .setHost("https://" + options.bucket + "." + options.endpoint);
     }
 
     public String upload(InputStream stream, String fileType) throws IOException {
@@ -112,8 +112,12 @@ public class AliyunOSSClient implements AutoCloseable {
         private String OSSAccessKeyId;
         private String policy;
         private String signature;
+        private String host;            // 上传地址
         private String key;             // 存储路径，例如aa/bb/cc.pdf
-        // 文件访问地址，上传完成后写入数据库需要用到
-        private String url;
+        private String url;             // 文件访问地址，上传完成后写入数据库需要用到
+
+        public String getUrl() {
+            return host + "/" + key;
+        }
     }
 }
