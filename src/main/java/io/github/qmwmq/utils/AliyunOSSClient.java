@@ -3,6 +3,7 @@ package io.github.qmwmq.utils;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.common.utils.BinaryUtil;
+import com.aliyun.oss.model.GeneratePresignedUrlRequest;
 import com.aliyun.oss.model.MatchMode;
 import com.aliyun.oss.model.PolicyConditions;
 import lombok.Data;
@@ -13,6 +14,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -73,6 +75,14 @@ public class AliyunOSSClient implements AutoCloseable {
         String ossKey = dir1 + "/" + dir2 + "/" + fileHash + "." + fileType;
         oss.putObject(options.bucket, ossKey, byteArrayInputStream);
         return "https://" + options.bucket + "." + options.endpoint + "/" + ossKey;
+    }
+
+    public String generatePresignedUrl(String url) {
+        Date expiration = new Date(System.currentTimeMillis() + 3600 * 1000); // 1小时有效
+        GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(options.bucket, url);
+        request.setExpiration(expiration);
+        URL signedUrl = oss.generatePresignedUrl(request);
+        return signedUrl.toString();
     }
 
     private byte[] HmacSHA1Signature(String data) throws NoSuchAlgorithmException, InvalidKeyException {
