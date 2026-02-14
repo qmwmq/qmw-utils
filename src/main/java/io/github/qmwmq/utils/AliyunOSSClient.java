@@ -25,8 +25,6 @@ public class AliyunOSSClient implements AutoCloseable {
 
     /**
      * 注册为单利bean
-     * 使用 @DestroyMethod('close')
-     * 或 @PreDestroy
      *
      * @param options 上传参数
      */
