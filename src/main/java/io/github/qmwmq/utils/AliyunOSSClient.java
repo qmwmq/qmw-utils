@@ -1,11 +1,13 @@
 package io.github.qmwmq.utils;
 
+import com.aliyun.oss.HttpMethod;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.common.utils.BinaryUtil;
 import com.aliyun.oss.model.GeneratePresignedUrlRequest;
 import com.aliyun.oss.model.MatchMode;
 import com.aliyun.oss.model.PolicyConditions;
+import com.aliyun.oss.model.ResponseHeaderOverrides;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -15,6 +17,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -77,10 +80,16 @@ public class AliyunOSSClient implements AutoCloseable {
         return "https://" + options.bucket + "." + options.endpoint + "/" + ossKey;
     }
 
-    public String generatePresignedUrl(String url) {
-        Date expiration = new Date(System.currentTimeMillis() + 3600 * 1000); // 1小时有效
-        GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(options.bucket, url);
-        request.setExpiration(expiration);
+    public String generatePresignedUrl(String objectKey, String fileName) {
+        GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(options.bucket, objectKey, HttpMethod.GET);
+        request.setExpiration(new Date(System.currentTimeMillis() + 3600 * 1000)); // 1小时有效
+
+        String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8)
+                .replaceAll("\\+", "%20"); // 解决文件名包含空格的问题
+
+        ResponseHeaderOverrides headers = new ResponseHeaderOverrides();
+        headers.setContentDisposition("attachment; filename=\"" + fileName + "\"; filename*=UTF-8''" + encodedFileName);
+        request.setResponseHeaders(headers);
         URL signedUrl = oss.generatePresignedUrl(request);
         return signedUrl.toString();
     }
