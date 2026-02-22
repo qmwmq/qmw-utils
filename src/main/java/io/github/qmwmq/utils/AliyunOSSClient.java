@@ -44,8 +44,9 @@ public class AliyunOSSClient implements AutoCloseable {
         // 1. 生成 OSS 文件存储路径（两层哈希目录）
         String dir1 = fileHash.substring(0, 2);
         String dir2 = fileHash.substring(2, 4);
-        String ossKey = dir1 + "/" + dir2 + "/" + fileHash + "." + fileType;
-
+        String ossKey = dir1 + "/" + dir2 + "/" + fileHash;
+        if (!StringUtils.isBlank(fileType))
+            ossKey += "." + fileType;
         // 2. 生成上传策略（Policy）
         long expireEndTime = System.currentTimeMillis() + options.signatureExpireTime * 1000;
         Date expiration = new Date(expireEndTime);
@@ -75,7 +76,9 @@ public class AliyunOSSClient implements AutoCloseable {
         String fileHash = FileUtils.sha256Hex(byteArrayInputStream);
         String dir1 = fileHash.substring(0, 2);
         String dir2 = fileHash.substring(2, 4);
-        String ossKey = dir1 + "/" + dir2 + "/" + fileHash + "." + fileType;
+        String ossKey = dir1 + "/" + dir2 + "/" + fileHash;
+        if (!StringUtils.isBlank(fileType))
+            ossKey += "." + fileType;
         oss.putObject(options.bucket, ossKey, byteArrayInputStream);
         return "https://" + options.bucket + "." + options.endpoint + "/" + ossKey;
     }
