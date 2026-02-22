@@ -80,7 +80,7 @@ public class AliyunOSSClient implements AutoCloseable {
         if (!StringUtils.isBlank(fileType))
             ossKey += "." + fileType;
         oss.putObject(options.bucket, ossKey, byteArrayInputStream);
-        return "https://" + options.bucket + "." + options.endpoint + "/" + ossKey;
+        return ossKey;
     }
 
     public String generatePresignedUrl(String objectKey, String fileName) {
