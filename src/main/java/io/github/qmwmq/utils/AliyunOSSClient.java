@@ -91,7 +91,9 @@ public class AliyunOSSClient implements AutoCloseable {
                 .replaceAll("\\+", "%20"); // 解决文件名包含空格的问题
 
         ResponseHeaderOverrides headers = new ResponseHeaderOverrides();
-        headers.setContentDisposition("attachment; filename=\"" + fileName + "\"; filename*=UTF-8''" + encodedFileName);
+        // attachment下载 inline预览
+//        headers.setContentDisposition("attachment; filename=\"" + fileName + "\"; filename*=UTF-8''" + encodedFileName);
+        headers.setContentDisposition("inline; filename=\"" + fileName + "\"; filename*=UTF-8''" + encodedFileName);
         request.setResponseHeaders(headers);
         URL signedUrl = oss.generatePresignedUrl(request);
         return signedUrl.toString();
