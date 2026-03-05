@@ -1,5 +1,6 @@
 package io.github.qmwmq.utils;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -36,20 +37,24 @@ public class DateUtils {
 
     public static LocalDateTime parseDateTime(Object o) {
         String str = StringUtils.ifBlank(o, "").strip();
+        // 日期时间
         for (String pattern : patterns) {
             try {
                 return LocalDateTime.parse(str, DateTimeFormatter.ofPattern(pattern));
-            } catch (Exception e) {
-                continue;
+            } catch (Exception _) {
             }
         }
-        // 时间戳11位或13位
+        // 日期
         for (String pattern : patterns) {
             try {
                 return LocalDate.parse(str, DateTimeFormatter.ofPattern(pattern)).atStartOfDay();
-            } catch (Exception e) {
-                continue;
+            } catch (Exception _) {
             }
+        }
+        // 13位时间戳
+        try {
+            return new Timestamp(Long.parseLong(str)).toLocalDateTime();
+        } catch (Exception _) {
         }
         return null;
     }
