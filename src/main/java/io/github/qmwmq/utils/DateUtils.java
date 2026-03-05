@@ -35,9 +35,10 @@ public class DateUtils {
     };
 
     public static LocalDateTime parseDateTime(Object o) {
+        String str = StringUtils.ifBlank(o, "").strip();
         for (String pattern : patterns) {
             try {
-                return LocalDateTime.parse(o.toString(), DateTimeFormatter.ofPattern(pattern));
+                return LocalDateTime.parse(str, DateTimeFormatter.ofPattern(pattern));
             } catch (Exception e) {
                 continue;
             }
@@ -45,7 +46,7 @@ public class DateUtils {
         // 时间戳11位或13位
         for (String pattern : patterns) {
             try {
-                return LocalDate.parse(o.toString(), DateTimeFormatter.ofPattern(pattern)).atStartOfDay();
+                return LocalDate.parse(str, DateTimeFormatter.ofPattern(pattern)).atStartOfDay();
             } catch (Exception e) {
                 continue;
             }
