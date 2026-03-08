@@ -1,6 +1,17 @@
 package io.github.qmwmq.utils;
 
+import java.math.BigDecimal;
+
 public class NumberUtils {
+
+    public static boolean isNumber(Object string) {
+        try {
+            new BigDecimal(string.toString());
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
 
     public Long parseLong(String number) {
         try {
