@@ -10,6 +10,7 @@ import tools.jackson.databind.SerializationContext;
 import tools.jackson.databind.ValueSerializer;
 import tools.jackson.databind.json.JsonMapper;
 import tools.jackson.databind.module.SimpleModule;
+import tools.jackson.databind.type.CollectionType;
 import tools.jackson.databind.type.TypeFactory;
 
 import java.math.BigDecimal;
@@ -19,7 +20,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JacksonUtils {
 
@@ -63,6 +65,12 @@ public class JacksonUtils {
         return toJSONString(o, false);
     }
 
+    public static <T> List<T> readList(Object o, Class<T> elementClass) {
+        if (StringUtils.isBlank(o)) return new ArrayList<>();
+        CollectionType listType = typeFactory.constructCollectionType(List.class, elementClass);
+        return jsonMapper.readValue(o.toString(), listType);
+    }
+
     static void main() {
         User user = new User()
                 .setName("qmwmq")
@@ -89,6 +97,8 @@ public class JacksonUtils {
         System.out.println(offsetDateTime);
 
         System.out.println(ZoneId.systemDefault());
+
+        System.out.println(readList("[1,2,3,4,5]", Integer.class).getClass().getName());
 
     }
 
