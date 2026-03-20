@@ -14,12 +14,12 @@ import java.io.InputStream;
 /**
  * Excel生成工具
  */
-public class ExcelGenerator {
+public class ExcelWriter {
 
     /**
      * 默认构造器
      */
-    private ExcelGenerator() {
+    private ExcelWriter() {
     }
 
     public static Workbook streamToWorkbook(InputStream stream) throws IOException {

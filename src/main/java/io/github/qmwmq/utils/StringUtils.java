@@ -42,6 +42,10 @@ public class StringUtils {
         return isBlank(str) ? replace : str.toString();
     }
 
+    public static String strip(Object string) {
+        return Optional.ofNullable(string).orElse("").toString().strip();
+    }
+
     /**
      * 去除所有空格，包括一些特殊空格
      *
