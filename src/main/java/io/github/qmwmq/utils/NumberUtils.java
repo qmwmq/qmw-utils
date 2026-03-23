@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public class NumberUtils {
 
-    private static final Pattern VALID_NUMBER_PATTERN = Pattern.compile("^((\\d{1,3})(,\\d{3})*|\\d+)(\\.\\d+)?$");
+    private static final Pattern VALID_NUMBER_PATTERN = Pattern.compile("^-?((\\d{1,3})(,\\d{3})*|\\d+)(\\.\\d+)?$");
 
     public static BigDecimal parse(Object n) {
         if (StringUtils.isBlank(n))
