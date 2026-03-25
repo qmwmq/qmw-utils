@@ -121,7 +121,7 @@ public class ExcelWriter {
 
     public static void downloadOnlyHeaders(Collection<String> headers, HttpServletResponse response, String fileName) {
         download(Collections.singletonMap("Sheet1", new ArrayList<>() {{
-            add(new HashMap<>() {{
+            add(new LinkedHashMap<>() {{
                 headers.forEach(h -> put(h, ""));
             }});
         }}), response, fileName);
