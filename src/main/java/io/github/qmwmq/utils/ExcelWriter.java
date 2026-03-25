@@ -115,6 +115,22 @@ public class ExcelWriter {
         download(map, response, null);
     }
 
+    public static void download(List<? extends Map<String, Object>> list, HttpServletResponse response) {
+        download(Collections.singletonMap("Sheet1", list), response, null);
+    }
+
+    public static void downloadOnlyHeaders(Collection<String> headers, HttpServletResponse response, String fileName) {
+        download(Collections.singletonMap("Sheet1", new ArrayList<>() {{
+            add(new HashMap<>() {{
+                headers.forEach(h -> put(h, ""));
+            }});
+        }}), response, fileName);
+    }
+
+    public static void downloadOnlyHeaders(Collection<String> headers, HttpServletResponse response) {
+        downloadOnlyHeaders(headers, response, null);
+    }
+
     private static void write(Map<String, List<? extends Map<String, Object>>> map, com.alibaba.excel.ExcelWriter writer) {
         Set<String> head = new LinkedHashSet<>(); // 表头
         List<List<Object>> data = new ArrayList<>(); // 内容
