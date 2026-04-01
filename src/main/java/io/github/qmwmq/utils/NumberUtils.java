@@ -27,24 +27,28 @@ public class NumberUtils {
         }
     }
 
-    static void main() {
-        System.out.println(parse("1234567.89"));
-        System.out.println(parse("1,234,567.89"));
-        System.out.println(parse("1234567"));
-        System.out.println(parse("1,234,567"));
-        System.out.println(parse("0.89"));
-        System.out.println(parse("1a234567.89"));
-        System.out.println(parse("12,34567.89"));
-        System.out.println(parse("1234567.89a"));
-        System.out.println(parse("1,234.56.78"));
-        System.out.println(parse(",1234567.89"));
+    // 包含边界
+    public static boolean isBetween(Number a, Number b, Number c) {
+        if (a == null || b == null || c == null)
+            throw new IllegalArgumentException("numbers cannot be null");
+
+        double aVal = a.doubleValue();
+        double bVal = b.doubleValue();
+        double cVal = c.doubleValue();
+
+        return aVal >= Math.min(bVal, cVal) && aVal <= Math.max(bVal, cVal);
     }
 
-    // 两个非负整数映射到唯一非负整数，Cantor 配对函数
-//    public static long uniqueNumber(long a, long b) {
-//        if (a < 0 || b < 0)
-//            throw new RuntimeException("both number must be non-negative");
-//        return (a + b) * (a + b + 1) / 2 + b;
-//    }
+    // 不包含边界
+    public static boolean isInside(Number a, Number b, Number c) {
+        if (a == null || b == null || c == null)
+            throw new IllegalArgumentException("numbers cannot be null");
+
+        double aVal = a.doubleValue();
+        double bVal = b.doubleValue();
+        double cVal = c.doubleValue();
+
+        return aVal > Math.min(bVal, cVal) && aVal < Math.max(bVal, cVal);
+    }
 
 }
