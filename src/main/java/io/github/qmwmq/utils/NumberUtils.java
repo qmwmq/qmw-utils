@@ -28,27 +28,20 @@ public class NumberUtils {
     }
 
     // 包含边界
-    public static boolean isBetween(Number a, Number b, Number c) {
+    public static boolean isBetween(BigDecimal a, BigDecimal b, BigDecimal c) {
         if (a == null || b == null || c == null)
             throw new IllegalArgumentException("numbers cannot be null");
-
-        double aVal = a.doubleValue();
-        double bVal = b.doubleValue();
-        double cVal = c.doubleValue();
-
-        return aVal >= Math.min(bVal, cVal) && aVal <= Math.max(bVal, cVal);
+        BigDecimal min = b.min(c);
+        BigDecimal max = b.max(c);
+        return a.compareTo(min) >= 0 && a.compareTo(max) <= 0;
     }
 
     // 不包含边界
-    public static boolean isInside(Number a, Number b, Number c) {
+    public static boolean isInside(BigDecimal a, BigDecimal b, BigDecimal c) {
         if (a == null || b == null || c == null)
             throw new IllegalArgumentException("numbers cannot be null");
-
-        double aVal = a.doubleValue();
-        double bVal = b.doubleValue();
-        double cVal = c.doubleValue();
-
-        return aVal > Math.min(bVal, cVal) && aVal < Math.max(bVal, cVal);
+        BigDecimal min = b.min(c);
+        BigDecimal max = b.max(c);
+        return a.compareTo(min) > 0 && a.compareTo(max) < 0;
     }
-
 }
