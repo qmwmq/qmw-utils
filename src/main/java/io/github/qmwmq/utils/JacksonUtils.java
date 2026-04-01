@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.experimental.Accessors;
 import tools.jackson.core.JsonGenerator;
 import tools.jackson.core.json.JsonReadFeature;
+import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.SerializationContext;
 import tools.jackson.databind.ValueSerializer;
 import tools.jackson.databind.json.JsonMapper;
@@ -21,7 +22,9 @@ import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class JacksonUtils {
 
@@ -69,6 +72,17 @@ public class JacksonUtils {
         if (StringUtils.isBlank(o)) return new ArrayList<>();
         CollectionType listType = typeFactory.constructCollectionType(List.class, elementClass);
         return jsonMapper.readValue(o.toString(), listType);
+    }
+
+    public static Map<String, Object> readMap(Object o) {
+        if (StringUtils.isBlank(o)) return new HashMap<>();
+        return jsonMapper.readValue(o.toString(), new TypeReference<>() {
+        });
+    }
+
+    public static <T> Map<String, T> readMap(Object o, Class<T> valueClass) {
+        if (StringUtils.isBlank(o)) return new HashMap<>();
+        return jsonMapper.readValue(o.toString(), typeFactory.constructMapType(HashMap.class, String.class, valueClass));
     }
 
     static void main() {
