@@ -94,7 +94,6 @@ public class ExcelWriter {
     }
 
     public static void download(Map<String, List<? extends Map<String, Object>>> map, HttpServletResponse response, String fileName) {
-
         response.setContentType("application/x-download");
         response.setCharacterEncoding(StandardCharsets.UTF_8);
         if (StringUtils.isBlank(fileName))
@@ -113,6 +112,26 @@ public class ExcelWriter {
 
     public static void download(Map<String, List<? extends Map<String, Object>>> map, HttpServletResponse response) {
         download(map, response, null);
+    }
+
+    public static void download(List<? extends Map<String, Object>> list, HttpServletResponse response) {
+        download(Collections.singletonMap("Sheet1", list), response, null);
+    }
+
+    public static void download(List<? extends Map<String, Object>> list, HttpServletResponse response, String fileName) {
+        download(Collections.singletonMap("Sheet1", list), response, fileName);
+    }
+
+    public static void downloadOnlyHeaders(Collection<String> headers, HttpServletResponse response, String fileName) {
+        download(Collections.singletonMap("Sheet1", new ArrayList<>() {{
+            add(new LinkedHashMap<>() {{
+                headers.forEach(h -> put(h, ""));
+            }});
+        }}), response, fileName);
+    }
+
+    public static void downloadOnlyHeaders(Collection<String> headers, HttpServletResponse response) {
+        downloadOnlyHeaders(headers, response, null);
     }
 
     private static void write(Map<String, List<? extends Map<String, Object>>> map, com.alibaba.excel.ExcelWriter writer) {
