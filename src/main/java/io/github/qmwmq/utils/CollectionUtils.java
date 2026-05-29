@@ -15,7 +15,7 @@ public class CollectionUtils {
      * @param consumer   每批执行的逻辑
      * @param <T>        任意类型
      */
-    private <T> void batchProcess(Collection<T> collection, int batchSize, Consumer<Collection<T>> consumer) {
+    public <T> void batchProcess(Collection<T> collection, int batchSize, Consumer<Collection<T>> consumer) {
         if (collection == null)
             return;
 
