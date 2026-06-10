@@ -99,7 +99,7 @@ public class JacksonUtils {
      * @param oldNode 旧对象
      * @param newNode 新对象
      */
-    private static void retainDifferences(ObjectNode oldNode, ObjectNode newNode) {
+    public static void retainDifferences(ObjectNode oldNode, ObjectNode newNode) {
 
         List<String> removeKeys = new ArrayList<>();
 
