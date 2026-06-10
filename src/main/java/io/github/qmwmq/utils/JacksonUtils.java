@@ -84,6 +84,15 @@ public class JacksonUtils {
         return jsonMapper.readValue(o.toString(), typeFactory.constructMapType(HashMap.class, String.class, valueClass));
     }
 
+    public static JsonNode readJsonNode(Object o) {
+        if (StringUtils.isBlank(o)) return jsonMapper.createObjectNode();
+        return jsonMapper.readTree(StringUtils.strip(o));
+    }
+
+    public static ObjectNode readObjectNode(Object o) {
+        return (ObjectNode) readJsonNode(o);
+    }
+
     /**
      * 保留差异，即删除两个对象中相同的部分
      *
