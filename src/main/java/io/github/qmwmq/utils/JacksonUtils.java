@@ -7,10 +7,12 @@ import lombok.experimental.Accessors;
 import tools.jackson.core.JsonGenerator;
 import tools.jackson.core.json.JsonReadFeature;
 import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.SerializationContext;
 import tools.jackson.databind.ValueSerializer;
 import tools.jackson.databind.json.JsonMapper;
 import tools.jackson.databind.module.SimpleModule;
+import tools.jackson.databind.node.ObjectNode;
 import tools.jackson.databind.type.CollectionType;
 import tools.jackson.databind.type.TypeFactory;
 
@@ -21,10 +23,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class JacksonUtils {
 
@@ -85,7 +84,65 @@ public class JacksonUtils {
         return jsonMapper.readValue(o.toString(), typeFactory.constructMapType(HashMap.class, String.class, valueClass));
     }
 
+    /**
+     * 保留差异，即删除两个对象中相同的部分
+     *
+     * @param oldNode 旧对象
+     * @param newNode 新对象
+     */
+    private static void retainDifferences(ObjectNode oldNode, ObjectNode newNode) {
+
+        List<String> removeKeys = new ArrayList<>();
+
+        for (Map.Entry<String, JsonNode> entry : newNode.properties()) {
+
+            String key = entry.getKey();
+
+            JsonNode oldValue = oldNode.get(key);
+            JsonNode newValue = entry.getValue();
+
+            // 两边都没有
+            if (oldValue == null) {
+                continue;
+            }
+
+            // 都是对象，递归比较
+            if (oldValue instanceof ObjectNode oldObj
+                    && newValue instanceof ObjectNode newObj) {
+
+                retainDifferences(oldObj, newObj);
+
+                if (oldObj.isEmpty() && newObj.isEmpty()) {
+                    removeKeys.add(key);
+                }
+
+                continue;
+            }
+
+            // 完全相等
+            if (Objects.equals(oldValue, newValue)) {
+                removeKeys.add(key);
+            }
+        }
+
+        for (String key : removeKeys) {
+            oldNode.remove(key);
+            newNode.remove(key);
+        }
+    }
+
     static void main() {
+        String a = "{\"name\": \"Tom\",\"age\": [1,2,3]}";
+
+        String b = "{\"name\": \"Tom\",\"age\": [1,2,4]}";
+
+        ObjectNode oldNode = (ObjectNode) jsonMapper.readTree(a);
+        ObjectNode newNode = (ObjectNode) jsonMapper.readTree(b);
+        retainDifferences(oldNode, newNode);
+        System.out.println(oldNode);
+        System.out.println(newNode);
+
+
         User user = new User()
                 .setName("qmwmq")
                 .setAge(18)
