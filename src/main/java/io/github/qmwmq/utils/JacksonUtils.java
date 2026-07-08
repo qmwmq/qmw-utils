@@ -72,11 +72,11 @@ public class JacksonUtils {
         return jsonMapper.readValue(o.toString(), listType);
     }
 
-    public static Map<String, Object> readMap(Object o) {
+    public static LinkedHashMap<String, Object> readMap(Object o) {
         return readMap(o, String.class, Object.class);
     }
 
-    public static <K, V> Map<K, V> readMap(
+    public static <K, V> LinkedHashMap<K, V> readMap(
             Object o,
             Class<K> keyClass,
             Class<V> valueClass
