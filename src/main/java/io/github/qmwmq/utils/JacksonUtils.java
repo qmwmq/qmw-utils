@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.experimental.Accessors;
 import tools.jackson.core.JsonGenerator;
 import tools.jackson.core.json.JsonReadFeature;
-import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.SerializationContext;
 import tools.jackson.databind.ValueSerializer;
@@ -74,14 +73,16 @@ public class JacksonUtils {
     }
 
     public static Map<String, Object> readMap(Object o) {
-        if (StringUtils.isBlank(o)) return new HashMap<>();
-        return jsonMapper.readValue(o.toString(), new TypeReference<>() {
-        });
+        return readMap(o, String.class, Object.class);
     }
 
-    public static <T> Map<String, T> readMap(Object o, Class<T> valueClass) {
-        if (StringUtils.isBlank(o)) return new HashMap<>();
-        return jsonMapper.readValue(o.toString(), typeFactory.constructMapType(HashMap.class, String.class, valueClass));
+    public static <K, V> Map<K, V> readMap(
+            Object o,
+            Class<K> keyClass,
+            Class<V> valueClass
+    ) {
+        if (StringUtils.isBlank(o.toString())) return new LinkedHashMap<>();
+        return jsonMapper.readValue(o.toString(), typeFactory.constructMapType(LinkedHashMap.class, keyClass, valueClass));
     }
 
     public static JsonNode readJsonNode(Object o) {
