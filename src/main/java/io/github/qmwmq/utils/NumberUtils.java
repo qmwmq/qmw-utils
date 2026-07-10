@@ -2,7 +2,10 @@ package io.github.qmwmq.utils;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class NumberUtils {
@@ -10,11 +13,10 @@ public class NumberUtils {
     private static final Pattern VALID_NUMBER_PATTERN = Pattern.compile("^-?((\\d{1,3})(,\\d{3})*|\\d+)(\\.\\d+)?$");
 
     public static BigDecimal parse(Object n) {
-        if (StringUtils.isBlank(n))
-            return null;
+        if (StringUtils.isBlank(n)) return null;
+        if (n instanceof Number e) return BigDecimal.valueOf(e.doubleValue());
         String str = StringUtils.strip(n);
-        if (!VALID_NUMBER_PATTERN.matcher(str).matches())
-            return null;
+        if (!VALID_NUMBER_PATTERN.matcher(str).matches()) return null;
         try {
             // 1. 创建适配千位分隔符的NumberFormat（Locale.US 适配英文千位分隔符规则）
             NumberFormat numberFormat = NumberFormat.getInstance(Locale.US);
@@ -44,4 +46,16 @@ public class NumberUtils {
         BigDecimal max = b.max(c);
         return a.compareTo(min) > 0 && a.compareTo(max) < 0;
     }
+
+    public static BigDecimal sum(Collection<Object> numbers) {
+        return numbers.stream()
+                .map(NumberUtils::parse)
+                .filter(Objects::nonNull)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public static BigDecimal sum(Object... numbers) {
+        return sum(Arrays.asList(numbers));
+    }
+
 }
