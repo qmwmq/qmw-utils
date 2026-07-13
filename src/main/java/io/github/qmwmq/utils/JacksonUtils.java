@@ -76,12 +76,16 @@ public class JacksonUtils {
         return readMap(o, String.class, Object.class);
     }
 
+    public static <V> LinkedHashMap<String, V> readMap(Object o, Class<V> valueClass) {
+        return readMap(o, String.class, valueClass);
+    }
+
     public static <K, V> LinkedHashMap<K, V> readMap(
             Object o,
             Class<K> keyClass,
             Class<V> valueClass
     ) {
-        if (StringUtils.isBlank(o.toString())) return new LinkedHashMap<>();
+        if (StringUtils.isBlank(o)) return new LinkedHashMap<>();
         return jsonMapper.readValue(o.toString(), typeFactory.constructMapType(LinkedHashMap.class, keyClass, valueClass));
     }
 
