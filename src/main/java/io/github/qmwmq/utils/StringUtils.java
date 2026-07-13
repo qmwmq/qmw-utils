@@ -31,6 +31,10 @@ public class StringUtils {
         return Optional.ofNullable(str).orElse("").toString().strip().isBlank();
     }
 
+    public static boolean isNotBlank(Object str) {
+        return !isBlank(str);
+    }
+
     /**
      * 如果是空字符串则转换为另一个字符串
      *
