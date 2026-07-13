@@ -28,7 +28,7 @@ public class StringUtils {
      * @return 是否空字符串
      */
     public static boolean isBlank(Object str) {
-        return Optional.ofNullable(str).orElse("").toString().strip().isBlank();
+        return strip(str).isBlank();
     }
 
     public static boolean isNotBlank(Object str) {
