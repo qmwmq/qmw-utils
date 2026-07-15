@@ -2,7 +2,6 @@ package io.github.qmwmq.utils;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.Objects;
@@ -14,7 +13,7 @@ public class NumberUtils {
 
     public static BigDecimal parse(Object n) {
         if (StringUtils.isBlank(n)) return null;
-        if (n instanceof Number e) return BigDecimal.valueOf(e.doubleValue());
+        if (n instanceof Number e) return new BigDecimal(e.toString());
         String str = StringUtils.strip(n);
         if (!VALID_NUMBER_PATTERN.matcher(str).matches()) return null;
         try {
@@ -23,7 +22,7 @@ public class NumberUtils {
             // 2. 解析字符串为Number类型
             Number number = numberFormat.parse(str);
             // 3. 转换为BigDecimal（推荐用BigDecimal.valueOf，避免精度丢失）
-            return BigDecimal.valueOf(number.doubleValue());
+            return new BigDecimal(number.toString());
         } catch (Exception e) {
             return null;
         }
@@ -47,15 +46,12 @@ public class NumberUtils {
         return a.compareTo(min) > 0 && a.compareTo(max) < 0;
     }
 
-    public static BigDecimal sum(Collection<Object> numbers) {
+    public static BigDecimal sum(Collection<?> numbers) {
+        if (numbers == null || numbers.isEmpty()) return BigDecimal.ZERO;
         return numbers.stream()
                 .map(NumberUtils::parse)
                 .filter(Objects::nonNull)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    public static BigDecimal sum(Object... numbers) {
-        return sum(Arrays.asList(numbers));
     }
 
 }
