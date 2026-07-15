@@ -2,6 +2,7 @@ package io.github.qmwmq.utils;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.Objects;
@@ -52,6 +53,11 @@ public class NumberUtils {
                 .map(NumberUtils::parse)
                 .filter(Objects::nonNull)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public static BigDecimal sum(Number... numbers) {
+        if (numbers == null) return BigDecimal.ZERO;
+        return sum(Arrays.asList(numbers));
     }
 
 }
