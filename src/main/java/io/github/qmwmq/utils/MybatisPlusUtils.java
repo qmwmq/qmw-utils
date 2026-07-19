@@ -10,8 +10,6 @@ import com.baomidou.mybatisplus.core.toolkit.support.LambdaMeta;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import org.apache.ibatis.reflection.property.PropertyNamer;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Objects;
 
@@ -46,11 +44,8 @@ public class MybatisPlusUtils {
             Object value = entry.getValue();
             sql = switch (value) {
                 case null -> replaceValue(sql, entry.getKey(), "null");
-                case String v -> replaceValue(sql, entry.getKey(), StringEscape.escapeString(v));
-                case LocalDate v -> replaceValue(sql, entry.getKey(), StringEscape.escapeString(v.toString()));
-                case LocalDateTime v -> replaceValue(sql, entry.getKey(), StringEscape.escapeString(v.toString()));
-                case Enum<?> v -> replaceValue(sql, entry.getKey(), StringEscape.escapeString(v.name()));
-                default -> replaceValue(sql, entry.getKey(), value.toString()); // 数字类型等不加引号
+                case Number v -> replaceValue(sql, entry.getKey(), v.toString()); // 数字类型等不加引号
+                default -> replaceValue(sql, entry.getKey(), StringEscape.escapeString(value.toString())); // 其他类型全部加引号
             };
         }
         return "select " + columns + " from " + tableName + " " + sql;
