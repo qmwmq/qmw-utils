@@ -69,6 +69,57 @@ public class StringUtils {
     }
 
     /**
+     * 下划线命名转驼峰命名
+     * <p>例如: user_name -> userName</p>
+     *
+     * @param str 下划线命名字符串
+     * @return 驼峰命名字符串
+     */
+    public static String toCamelCase(Object str) {
+        String s = strip(str);
+        if (s.isEmpty()) {
+            return s;
+        }
+        StringBuilder sb = new StringBuilder();
+        boolean upperNext = false;
+        for (char c : s.toCharArray()) {
+            if (c == '_') {
+                upperNext = true;
+            } else {
+                sb.append(upperNext ? Character.toUpperCase(c) : Character.toLowerCase(c));
+                upperNext = false;
+            }
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 驼峰命名转下划线命名
+     * <p>例如: userName -> user_name</p>
+     *
+     * @param str 驼峰命名字符串
+     * @return 下划线命名字符串
+     */
+    public static String toSnakeCase(Object str) {
+        String s = strip(str);
+        if (s.isEmpty()) {
+            return s;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (char c : s.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                if (!sb.isEmpty()) {
+                    sb.append('_');
+                }
+                sb.append(Character.toLowerCase(c));
+            } else {
+                sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
+
+    /**
      * 生成UUID，不带'-'
      *
      * @return uuid
@@ -76,5 +127,7 @@ public class StringUtils {
     public static String uuid() {
         return UUID.randomUUID().toString().replace("-", "");
     }
+
+
 
 }
