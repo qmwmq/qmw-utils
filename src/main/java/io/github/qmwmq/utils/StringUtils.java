@@ -50,7 +50,7 @@ public class StringUtils {
         return Optional.ofNullable(string).orElse("").toString().strip();
     }
 
-    private String truncate(Object str, int max) {
+    public String truncate(Object str, int max) {
         String s = strip(str);
         return s.length() > max ? s.substring(0, max) : s;
     }
@@ -127,7 +127,5 @@ public class StringUtils {
     public static String uuid() {
         return UUID.randomUUID().toString().replace("-", "");
     }
-
-
 
 }
