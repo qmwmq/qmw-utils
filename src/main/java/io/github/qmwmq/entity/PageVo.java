@@ -53,6 +53,11 @@ public class PageVo<T> {
             return this;
         }
 
+        public Builder<T> extra(Map<String, Object> extra) {
+            instance.setExtra(extra);
+            return this;
+        }
+
         public Builder<T> putExtra(String key, Object value) {
             if (instance.extra == null)
                 instance.extra = new HashMap<>();
