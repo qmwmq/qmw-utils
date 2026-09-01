@@ -1,11 +1,20 @@
 package io.github.qmwmq.utils;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public class CollectionUtils {
+
+    public static <T> List<T> filterNonNull(Collection<? extends T> collection) {
+        if (collection == null) return new ArrayList<>();
+        return collection.stream()
+                .filter(Objects::nonNull)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
 
     /**
      * 通用分批处理工具
