@@ -66,21 +66,4 @@ public class ServletUtils {
         response.addHeader("Access-Control-Expose-Headers", header);
     }
 
-    //    public void download(HttpServletResponse response) throws Exception {
-//        ByteArrayOutputStream byteArrayOutputStream = PdfUtils.test2();
-//        response.setContentType("application/x-download");
-//        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
-//        response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
-//        response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode("用户信息.pdf", StandardCharsets.UTF_8.name()));
-//        ServletOutputStream stream = response.getOutputStream();
-//        byteArrayOutputStream.writeTo(stream);
-//        stream.close();
-//        byteArrayOutputStream.close();
-//    }
-
-//    fileName = URLEncoder.encode(com.medibee.util.StringUtil.ifEmpty(fileName, UUID.randomUUID().toString()) + ".xlsx", StandardCharsets.UTF_8.name());
-//                response.setContentType("application/x-download");
-//                response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
-//                response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
-//    builder = EasyExcel.write(response.getOutputStream());
 }
