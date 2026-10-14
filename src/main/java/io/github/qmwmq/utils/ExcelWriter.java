@@ -7,16 +7,10 @@ import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import io.github.qmwmq.exception.CustomException;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.commons.io.IOUtils;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ooxml.POIXMLException;
-import org.apache.poi.openxml4j.exceptions.OLE2NotOfficeXmlFileException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -72,19 +66,6 @@ public class ExcelWriter {
      * 默认构造器
      */
     private ExcelWriter() {
-    }
-
-    public static Workbook streamToWorkbook(InputStream stream) throws IOException {
-        byte[] bytes = IOUtils.toByteArray(stream);
-        try {
-            return new XSSFWorkbook(new ByteArrayInputStream(bytes)); // 先尝试xlsx
-        } catch (OLE2NotOfficeXmlFileException e) {
-            return new HSSFWorkbook(new ByteArrayInputStream(bytes)); // 再尝试xls
-        } catch (POIXMLException e) { // 其他 POI 内部异常
-            throw new RuntimeException("Excel文件解析失败", e);
-        } catch (Exception e) {
-            throw new RuntimeException("读取Excel文件失败", e);
-        }
     }
 
     public static void write(Map<String, List<? extends Map<String, Object>>> map, String filePath) {

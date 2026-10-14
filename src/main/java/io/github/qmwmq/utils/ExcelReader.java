@@ -4,11 +4,14 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import lombok.Getter;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ooxml.POIXMLException;
+import org.apache.poi.openxml4j.exceptions.OLE2NotOfficeXmlFileException;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.util.IOUtils;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -40,6 +43,19 @@ public class ExcelReader {
         DataListener dataListener = new DataListener();
         EasyExcel.read(stream, dataListener).headRowNumber(1).doReadAll();
         return dataListener.getDataMap();
+    }
+
+    public static Workbook streamToWorkbook(InputStream stream) throws IOException {
+        byte[] bytes = IOUtils.toByteArray(stream);
+        try {
+            return new XSSFWorkbook(new ByteArrayInputStream(bytes)); // 先尝试xlsx
+        } catch (OLE2NotOfficeXmlFileException e) {
+            return new HSSFWorkbook(new ByteArrayInputStream(bytes)); // 再尝试xls
+        } catch (POIXMLException e) { // 其他 POI 内部异常
+            throw new RuntimeException("Excel文件解析失败", e);
+        } catch (Exception e) {
+            throw new RuntimeException("读取Excel文件失败", e);
+        }
     }
 
     public static class DataListener extends AnalysisEventListener<Map<Integer, Object>> {
